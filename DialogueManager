@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class DialogueManager : MonoBehaviour
+{
+public TextMeshProUGUI text;
+public Dialogues dialogues;
+
+public void SetNewDialogue()
+{
+if (!dialogues.IsDialoguesEnd())
+text.text = dialogues.GetCurrentDialogue();
+}
+
+public void GetDialogueBack()
+{
+if (!dialogues.IsFirstDialogue())
+text.text = dialogues.GetPreviousDialogue();
+}
+}

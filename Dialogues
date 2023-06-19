@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Dialogues : MonoBehaviour
+{
+private int currentDialogue = -1;
+public List<string> dialogues;
+
+public string GetCurrentDialogue()
+{
+return dialogues[++currentDialogue];
+}
+
+public string GetPreviousDialogue()
+{
+return dialogues[--currentDialogue];
+}
+
+public bool IsDialoguesEnd()
+{
+return currentDialogue == dialogues.Count;
+}
+
+public bool IsFirstDialogue()
+{
+return currentDialogue == -1;
+}
+}

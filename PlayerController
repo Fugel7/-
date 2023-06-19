@@ -1,0 +1,89 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayerController : MonoBehaviour
+{
+private Rigidbody2D physic;
+public float speed = 0.1f;
+public float jump = 100f;
+private bool isGrounded;
+private bool isDead;
+private float groundRadius = 0.00000000000001f;
+private float deadRadius = 0.12f;
+public Transform groundCheck;
+public LayerMask groundMask;
+public LayerMask deadZoneMask;
+public bool isRight = true;
+public bool isGateOpen;
+public GameObject bullet;
+public Vector3 playerPosition;
+public AudioSource ShootSound;
+public AudioSource StepSound;
+public AudioClip ShootClip;
+public AudioClip StepClip;
+
+private void Start()
+{
+physic = GetComponent<Rigidbody2D>();
+playerPosition = gameObject.transform.position;
+}
+
+void FixedUpdate()
+{
+Movement();
+Jump();
+}
+
+private void Movement()
+{
+float moveHorizontal = Input.GetAxis("Horizontal");
+
+Vector2 movement = new Vector2(moveHorizontal, 0);
+
+transform.Translate(movement * speed * Time.fixedDeltaTime);
+/*if (Input.GetAxis("Horizontal") != 0)
+StepSound.Play();*/
+}
+
+private void Jump()
+{
+if (Input.GetAxis("Jump") > 0)
+{
+if (isGrounded)
+{
+physic.AddForce(Vector2.up * jump);
+}
+}
+}
+
+private void Update()
+{
+isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundMask);
+isDead = Physics2D.OverlapCircle(groundCheck.position, deadRadius, deadZoneMask);
+
+if (isDead)
+gameObject.transform.position = playerPosition;
+
+if (Input.GetAxis("Horizontal") < 0)
+{
+GetComponent<SpriteRenderer>().flipX = true;
+isRight = false;
+}
+if (Input.GetAxis("Horizontal") > 0)
+{
+GetComponent<SpriteRenderer>().flipX = false;
+isRight = true;
+}
+
+if (Input.GetMouseButtonDown(0))
+{
+Instantiate(bullet, transform.position + new Vector3(0, 0.11f, 0), Quaternion.identity);
+ShootSound.PlayOneShot(ShootClip);
+}
+}
+
+
+
+}

@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class DoorTrigger : MonoBehaviour
+{
+private Collider2D player;
+public Button button;
+
+private void Start()
+{
+player = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
+button.gameObject.SetActive(false);
+}
+
+private void OnTriggerStay2D(Collider2D collision)
+{
+if (collision == player.GetComponent<Collider2D>() && !player.GetComponent<Collider2D>().GetComponent<PlayerController>().isGateOpen)
+{
+button.gameObject.SetActive(true);
+}
+}
+
+private void OnTriggerExit2D(Collider2D collision)
+{
+button.gameObject.SetActive(false);
+}
+}

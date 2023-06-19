@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Shoot : MonoBehaviour
+{
+public float force = 0.1f;
+private Rigidbody2D physic;
+public PlayerController Rotate;
+
+void Start()
+{
+physic = GetComponent<Rigidbody2D>();
+Rotate = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+if (Rotate.isRight)
+physic.AddForce(new Vector2(force, 0));
+else
+physic.AddForce(new Vector2(-force, 0));
+
+Destroy(gameObject, 1f);
+}
+
+private void OnTriggerEnter2D(Collider2D collision)
+{
+if (collision.tag == "Tilemap")
+Destroy(gameObject);
+if (collision.tag == "Enemy")
+{
+collision.gameObject.GetComponent<EnemyController>().health--;
+Destroy(gameObject);
+}
+}
+}

@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class EnemyCounter : MonoBehaviour
+{
+public Text EnemyCountInformation;
+
+void Update()
+{
+var enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+if (enemyCount > 0 && enemyCount < 5) EnemyCountInformation.text = $"осталось уничтожить {enemyCount.ToString()} врага";
+else if (enemyCount > 4) EnemyCountInformation.text = $"осталось уничтожить {enemyCount.ToString()} врагов";
+else EnemyCountInformation.text = "нажмите Tab, чтобы получить теорию к заданию";
+}
+}

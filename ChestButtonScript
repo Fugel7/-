@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class ChestButtonScript : MonoBehaviour
+{
+public Sprite openedChest;
+private Button button1;
+public GameObject chest;
+public AudioSource DoorSound;
+
+public void Start()
+{
+button1 = GetComponent<ChestCollision>().button;
+}
+
+public void OnClick()
+{
+SceneManager.LoadScene(3, LoadSceneMode.Additive);
+chest.GetComponent<SpriteRenderer>().sprite = openedChest;
+button1.gameObject.SetActive(false);
+}
+
+public void OnClickBed()
+{
+SceneManager.LoadScene(2);
+}
+
+public void OnClickDoor()
+{
+SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+DoorSound.Play();
+}
+}

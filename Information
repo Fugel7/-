@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class Information : MonoBehaviour
+{
+public KeyCode openInformation = KeyCode.Tab;
+private GameObject text;
+private GameObject button;
+private GameObject backButton;
+
+private void Start()
+{
+text = GameObject.FindGameObjectWithTag("TextInfo");
+button = GameObject.FindGameObjectWithTag("SkipButton");
+backButton = GameObject.FindGameObjectWithTag("BackButton");
+text.SetActive(false);
+button.SetActive(false);
+backButton.SetActive(false);
+}
+
+void Update()
+{
+if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && Input.GetKeyDown(openInformation))
+{
+if (text.gameObject.activeSelf)
+{
+text.SetActive(false);
+button.SetActive(false);
+backButton.SetActive(false);
+}
+else
+{
+text.SetActive(true);
+button.SetActive(true);
+backButton.SetActive(true);
+}
+}
+}
+
+}

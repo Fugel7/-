@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class EnemyController : MonoBehaviour
+{
+public Transform EnemyGroundCheck;
+public LayerMask EnemyGroundMask;
+private float groundRadius = 0.11f;
+private bool isGrounded;
+private int vector = 1;
+private GameObject player;
+public int health { get; set; }
+public GameObject bullet;
+private Vector3 playerPosition;
+
+private void Start()
+{
+health = 10;
+player = GameObject.FindGameObjectWithTag("Player");
+playerPosition = player.transform.position;
+}
+
+void Update()
+{
+isGrounded = Physics2D.OverlapCircle(EnemyGroundCheck.position, groundRadius, EnemyGroundMask);
+if (isGrounded)
+gameObject.transform.position += new Vector3(0.03f * vector, 0, 0);
+
+if (!isGrounded)
+{
+vector = -vector;
+gameObject.transform.position += new Vector3(0.03f * vector, 0, 0);
+}
+
+if (health <= 0)
+Destroy(gameObject);
+
+if (vector < 0)
+{
+GetComponent<SpriteRenderer>().flipX = false;
+}
+
+if (vector > 0)
+{
+GetComponent<SpriteRenderer>().flipX = true;
+}
+}
+
+private void OnCollisionEnter2D(Collision2D collision)
+{
+if (collision.gameObject.tag == "Player")
+player.transform.position = playerPosition;
+}
+}
